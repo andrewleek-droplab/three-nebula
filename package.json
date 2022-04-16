@@ -21,6 +21,7 @@
     "build:umd": "webpack",
     "build:cjs": "babel src --out-dir build/cjs --extensions \".js\" --source-maps inline --presets @babel/env",
     "build:esm": "babel src --out-dir build/esm --extensions \".js\" --source-maps inline",
+    "build:package": "npm run build && npm pack",
     "dev": "webpack --mode=development --watch",
     "sandbox": "concurrently -k \"npm:sandbox:*\"",
     "sandbox:build": "webpack --config webpack.config.sandbox.js --mode=development --watch",
