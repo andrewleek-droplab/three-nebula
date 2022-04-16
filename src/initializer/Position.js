@@ -90,5 +90,12 @@ Position.prototype.initialize = (function() {
     target.position.x = zone.vector.x;
     target.position.y = zone.vector.y;
     target.position.z = zone.vector.z;
+
+    let i = this.zones.length;
+
+    while (i--) {
+      this.zones[i].setRotation(target.parent.rotation.x,target.parent.rotation.y,target.parent.rotation.z);
+    }
+
   };
 })();

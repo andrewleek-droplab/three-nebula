@@ -1,4 +1,5 @@
 import Vector3D from '../math/Vector3D';
+import { Euler, Vector3 } from '../core/three/';
 import Zone from './Zone';
 import { ZONE_TYPE_LINE as type } from './types';
 
@@ -39,6 +40,15 @@ export default class LineZone extends Zone {
       this.z2 = z2;
     }
 
+    this.initVector = new Vector3(
+      this.x2 - this.x1, 
+      this.y2 - this.y1, 
+      this.z2 - this.z1
+    );
+
+    this.rotation = new Euler();
+    this.rotatedVector = this.initVector.clone().applyEuler(this.rotation);
+
     this.supportsCrossing = false;
   }
 
@@ -51,11 +61,22 @@ export default class LineZone extends Zone {
     return true;
   }
 
+  /**
+   * LineZone is a 3d line zone
+   * @param {Number} x - the line's start point of x value or a Vector3D Object
+   * @param {Number} y - the line's start point of x value or a Vector3D Object
+   * @param {Number} z - the line's start point of x value or a Vector3D Object
+   */
+  setRotation(x, y, z) {
+    this.rotation.set(x,y,z);
+    this.rotatedVector.copy(this.initVector).applyEuler(this.rotation);
+  }
+
   getPosition() {
     this.random = Math.random();
-    this.vector.x = this.x1 + this.random * (this.x2 - this.x1);
-    this.vector.y = this.y1 + this.random * (this.y2 - this.y1);
-    this.vector.z = this.z1 + this.random * (this.z2 - this.z1);
+    this.vector.x = this.x1 + this.random * this.rotatedVector.x;
+    this.vector.y = this.y1 + this.random * this.rotatedVector.y;
+    this.vector.z = this.z1 + this.random * this.rotatedVector.z;
 
     return this.vector;
   }

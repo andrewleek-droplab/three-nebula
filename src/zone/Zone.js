@@ -26,6 +26,8 @@ export default class Zone {
     this.supportsCrossing = true;
   }
 
+  setRotation(x,y,z) {} //eslint-disable-line
+
   getPosition() {
     return null;
   }

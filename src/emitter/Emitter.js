@@ -536,11 +536,12 @@ export default class Emitter extends Particle {
   setupParticle(particle, index) {
     const { initializers, behaviours } = this;
 
+    particle.parent = this;
+    particle.index = index;
+    
     InitializerUtil.initialize(this, particle, initializers);
 
     particle.addBehaviours(behaviours);
-    particle.parent = this;
-    particle.index = index;
 
     this.particles.push(particle);
   }
